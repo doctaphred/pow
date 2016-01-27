@@ -56,8 +56,6 @@ class Pow:
 
     # TODO: LOL FIXME
     path = '/Users/frederick/.config/pow/pow.json'
-    success = green('POW!')
-    failure = red('Nertz!')
 
     def __init__(self, rows):
         self.rows = rows
@@ -66,6 +64,15 @@ class Pow:
     def load(cls):
         with open(cls.path) as f:
             return cls(json.load(f)['entries'])
+
+    def success(self, *args, **kwargs):
+        print(green('POW!'), *args, **kwargs)
+
+    def failure(self, *args, **kwargs):
+        print(red('Nertz!'), *args, **kwargs)
+
+    def info(self, *args, **kwargs):
+        print(*args, **kwargs)
 
     def save(self):
         with open(self.path, 'w') as f:
@@ -82,7 +89,7 @@ class Pow:
     def add(self, entry, labels):
         self.rows.append({'entry': entry, 'labels': labels})
         self.save()
-        print('{} added {} with labels {}'.format(self.success, entry, labels))
+        self.success('Added {} with labels {}'.format(entry, labels))
 
     def remove(self, entry):
         pass  # TODO
@@ -98,48 +105,48 @@ class Pow:
 
     def print(self, labels=()):
         rows = self.select(labels)
-        print('{} Found {} entries:'.format(self.success, len(rows)))
+        self.success('Found {} entries:'.format(len(rows)))
         for row in rows:
-            print(row['entry'], row['labels'])
+            self.info(row['entry'], row['labels'])
 
     def default(self, labels):
         rows = self.select(labels)
         if not rows:
             if len(labels) == 1:
-                print('{} Nothing matched that label.'.format(self.failure))
+                self.failure('Nothing matched that label.')
             else:
-                print('{} Nothing matched those labels.'.format(self.failure))
+                self.failure('Nothing matched those labels.')
         elif len(rows) == 1:
             entry = rows[0]['entry']
             set_clipboard(entry)
-            print('{} Copied {} to the clipboard.'.format(self.success, cyan(entry)))
+            self.success('Copied {} to the clipboard.'.format(cyan(entry)))
         else:
-            print('{} Found {} matches:'.format(self.success, len(rows)))
-            print()
+            self.success('Found {} matches:'.format(len(rows)))
+            self.info()
             for row in rows:
-                print(cyan(row['entry']), row['labels'])
-            print()
-            print('(add -f to copy them all)')
+                self.info(cyan(row['entry']), row['labels'])
+            self.info()
+            self.info('(add -m to copy them all)')
 
     def open(self, labels):
         rows = self.select(labels)
         if not rows:
             if len(labels) == 1:
-                print('{} Nothing matched that label.'.format(self.failure))
+                self.failure('Nothing matched that label.')
             else:
-                print('Nertz! Nothing matched those labels.')
+                self.failure('Nothing matched those labels.')
         elif len(rows) == 1:
             entry = rows[0]['entry']
             result = webbrowser.open_new(entry)
-            print(type(result), result)
-            print('{} Opening {} in a browser.'.format(self.success, cyan(entry)))
+            self.info(type(result), result)
+            self.success('Opening {} in a browser.'.format(cyan(entry)))
         else:
-            print('{} Found {} matches:'.format(self.success, len(rows)))
-            print()
+            self.success('Found {} matches:'.format(len(rows)))
+            self.info()
             for row in rows:
-                print(cyan(row['entry']), row['labels'])
-            print()
-            print('(add -f to open them all)')
+                self.info(cyan(row['entry']), row['labels'])
+            self.info()
+            self.info('(add -m to open them all)')
 
 
 if __name__ == '__main__':
