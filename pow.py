@@ -63,7 +63,7 @@ class Pow:
     @classmethod
     def load(cls):
         with open(cls.path) as f:
-            return cls(json.load(f)['entries'])
+            return cls(json.load(f))
 
     def success(self, *args, **kwargs):
         print(green('POW!'), *args, **kwargs)
@@ -76,18 +76,18 @@ class Pow:
 
     def save(self):
         with open(self.path, 'w') as f:
-            json.dump({'entries': self.rows}, f, ensure_ascii=False, indent=2)
+            json.dump(self.rows, f, ensure_ascii=False, indent=2)
 
     def select(self, labels):
         labels = Counter(labels)
 
         def all_labels_match(row):
-            return not labels - Counter(row['labels'])
+            return not labels - Counter(self.rows[row])
 
         return [row for row in self.rows if all_labels_match(row)]
 
     def add(self, entry, labels):
-        self.rows.append({'entry': entry, 'labels': labels})
+        self.rows[entry] = labels
         self.save()
         self.success('Added {} with labels {}'.format(entry, labels))
 
@@ -105,9 +105,14 @@ class Pow:
 
     def print(self, labels=()):
         rows = self.select(labels)
-        self.success('Found {} entries:'.format(len(rows)))
-        for row in rows:
-            self.info(row['entry'], row['labels'])
+        if not rows:
+            self.failure('Nothing matched those labels.')
+        elif len(rows) == 1:
+            self.success('Found 1 entry:')
+        else:
+            self.success('Found {} entries:'.format(len(rows)))
+        for entry in rows:
+            self.info(entry, self.rows[entry])
 
     def default(self, labels):
         rows = self.select(labels)
@@ -117,14 +122,14 @@ class Pow:
             else:
                 self.failure('Nothing matched those labels.')
         elif len(rows) == 1:
-            entry = rows[0]['entry']
+            entry = next(iter(rows))
             set_clipboard(entry)
             self.success('Copied {} to the clipboard.'.format(cyan(entry)))
         else:
             self.success('Found {} matches:'.format(len(rows)))
             self.info()
-            for row in rows:
-                self.info(cyan(row['entry']), row['labels'])
+            for entry in rows:
+                self.info(cyan(entry), self.rows[entry])
             self.info()
             self.info('(add -m to copy them all)')
 
@@ -136,15 +141,15 @@ class Pow:
             else:
                 self.failure('Nothing matched those labels.')
         elif len(rows) == 1:
-            entry = rows[0]['entry']
+            entry = next(iter(rows))
             result = webbrowser.open_new(entry)
             self.info(type(result), result)
             self.success('Opening {} in a browser.'.format(cyan(entry)))
         else:
             self.success('Found {} matches:'.format(len(rows)))
             self.info()
-            for row in rows:
-                self.info(cyan(row['entry']), row['labels'])
+            for entry in rows:
+                self.info(cyan(entry), self.rows[entry])
             self.info()
             self.info('(add -m to open them all)')
 
