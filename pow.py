@@ -1,17 +1,21 @@
 #!/usr/bin/env python3 -u
 """
 Usage:
+    pow <label>...
     pow all
     pow add <entry> <label>...
     pow paste <label>...
-    pow remove <label>...
+    pow label <entry> <label>...
+    pow relabel <entry> <label>...
+    pow unlabel <entry> <label>...
+    pow remove <entry>
     pow echo <label>...
     pow open <label>...
     pow edit
-    pow <label>...
     pow -h | --help
 Options:
     -q, --quiet
+    -m, --multi
 """
 import json
 import webbrowser
@@ -80,13 +84,16 @@ class Pow:
         self.save()
         print('{} added {} with labels {}'.format(self.success, entry, labels))
 
-    def delete(self, entry):
-        pass  # TODO
-
-    def set(self, entry, labels):
+    def remove(self, entry):
         pass  # TODO
 
     def label(self, entry, labels):
+        pass  # TODO
+
+    def relabel(self, entry, labels):
+        pass  # TODO
+
+    def unlabel(self, entry, labels):
         pass  # TODO
 
     def print(self, labels=()):
@@ -137,7 +144,10 @@ class Pow:
 
 if __name__ == '__main__':
     args = docopt(__doc__)
-    # print(args)
+    print(args)
+
+    if args['edit']:
+        pass  # TODO
 
     entry = args.get('<entry>')
     labels = args.get('<label>')
@@ -148,6 +158,18 @@ if __name__ == '__main__':
         pow.print()
     elif args['add']:
         pow.add(entry, labels)
+    elif args['paste']:
+        pow.paste(labels)
+    elif args['label']:
+        pow.label(entry, labels)
+    elif args['relabel']:
+        pow.relabel(entry, labels)
+    elif args['unlabel']:
+        pow.unlabel(entry, labels)
+    elif args['remove']:
+        pow.remove(entry)
+    elif args['echo']:
+        pow.echo(labels)
     elif args['open']:
         pow.open(labels)
     else:
