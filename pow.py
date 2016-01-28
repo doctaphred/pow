@@ -2,6 +2,9 @@
 """
 POW! Command line text snippets, inspired by Zach Holman's **boom**.
 
+# TODO: why won't docopt allow in-line descriptions?
+# (Switch to click/argparse?)
+
   pow (list|ls)                         List all entries
   pow (add|new|set) <entry> <label>...  Add a new entry
   pow label <entry> <label>...          Add labels to an existing entry
@@ -245,6 +248,12 @@ if __name__ == '__main__':
         entry = get_clipboard()
 
     pow = Pow.load(quiet=args['--quiet'], multi=args['--multi'])
+
+    # # TODO:
+    # if '--' in labels:
+    #     index = labels.index('--')
+    #     labels = labels[:index]
+    #     new_labels = labels[index + 1:]
 
     # TODO: switch to click or argparse, this is gross
     if args['list'] or args['ls']:
