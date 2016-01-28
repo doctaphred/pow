@@ -44,8 +44,6 @@ import colorama
 from docopt import docopt
 # TODO: from fuzzywuzzy import fuzz
 
-# TODO: initialize ~/.config/pow
-
 
 def colored(color, s):
     return getattr(colorama.Fore, color.upper()) + s + colorama.Fore.RESET
@@ -75,7 +73,9 @@ def set_clipboard(contents):
 
 class Pow:
 
-    path = Path('~/.config/pow/pow.json').expanduser()
+    pow_dir = Path('~/.config/pow/').expanduser()
+    path = pow_dir / 'pow.json'
+
     exit_code = 0
 
     def __init__(self, rows, quiet=False, multi=False):
@@ -98,6 +98,7 @@ class Pow:
 
     @classmethod
     def load(cls, *args, **kwargs):
+        cls.pow_dir.mkdir(parents=True, exist_ok=True)
         with cls.path.open() as f:
             return cls(rows=json.load(f), *args, **kwargs)
 
