@@ -84,14 +84,17 @@ class Pow:
         self.multi = multi
 
     def success(self, *args, **kwargs):
-        print(green('POW!'), *args, **kwargs)
+        if not self.quiet:
+            print(green('POW!'), *args, **kwargs)
 
     def failure(self, *args, **kwargs):
-        print(red('Nertz!'), *args, **kwargs)
+        if not self.quiet:
+            print(red('Nertz!'), *args, **kwargs)
         self.exit_code = 1
 
     def info(self, *args, **kwargs):
-        print(*args, **kwargs)
+        if not self.quiet:
+            print(*args, **kwargs)
 
     @classmethod
     def load(cls, *args, **kwargs):
