@@ -38,6 +38,7 @@ import sys
 import webbrowser
 from collections import Counter
 from functools import partial, wraps
+from pathlib import Path
 
 import colorama
 from docopt import docopt
@@ -74,8 +75,7 @@ def set_clipboard(contents):
 
 class Pow:
 
-    # TODO: LOL FIXME
-    path = '/Users/frederick/.config/pow/pow.json'
+    path = Path('~/.config/pow/pow.json').expanduser()
     exit_code = 0
 
     def __init__(self, rows, quiet=False, multi=False):
@@ -95,11 +95,11 @@ class Pow:
 
     @classmethod
     def load(cls, *args, **kwargs):
-        with open(cls.path) as f:
+        with cls.path.open() as f:
             return cls(rows=json.load(f), *args, **kwargs)
 
     def save(self):
-        with open(self.path, 'w') as f:
+        with self.path.open('w') as f:
             json.dump(self.rows, f, ensure_ascii=False, indent=2)
 
     def select(self, labels):
