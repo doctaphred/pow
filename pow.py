@@ -2,21 +2,21 @@
 """
 POW! Command line text snippets, inspired by Zach Holman's **boom**.
 
-  pow (list|ls)                       List all entries
-  pow (add|new) <entry> <label>...    Add a new entry
-  pow label <entry> <label>...        Add labels to an existing entry
-  pow relabel <entry> <label>...      Replace the labels of an existing entry
-  pow unlabel <entry> <label>...      Remove labels from an existing entry
-  pow (remove|rm|delete) <entry>      Remove an existing entry
-  pow echo [options] <label>...       Echo without copying
-  pow open [options] <label>...       Open url in browser
-  pow edit                            Open pow.json in editor
-  pow (view|cat)                      Dump pow.json on the screen
-  pow [options] <label>...            Copy specified entry to the clipboard
+  pow (list|ls)                         List all entries
+  pow (add|new|set) <entry> <label>...  Add a new entry
+  pow label <entry> <label>...          Add labels to an existing entry
+  pow relabel <entry> <label>...        Replace the labels of an existing entry
+  pow unlabel <entry> <label>...        Remove labels from an existing entry
+  pow (remove|rm|delete) <entry>        Remove an existing entry
+  pow echo [options] <label>...         Echo without copying
+  pow open [options] <label>...         Open url in browser
+  pow edit                              Open pow.json in editor
+  pow (view|cat)                        Dump pow.json on the screen
+  pow [options] <label>...              Copy specified entry to the clipboard
 
 Usage:
   pow (list|ls)
-  pow (add|new) <entry> <label>...
+  pow (add|new|set) <entry> <label>...
   pow label <entry> <label>...
   pow relabel <entry> <label>...
   pow unlabel <entry> <label>...
@@ -245,7 +245,7 @@ if __name__ == '__main__':
     # TODO: switch to click or argparse, this is gross
     if args['list'] or args['ls']:
         pow.list()
-    elif args['add'] or args['new']:
+    elif args['add'] or args['new'] or args['set']:
         pow.add(entry, labels)
     elif args['label']:
         pow.label(entry, labels)
