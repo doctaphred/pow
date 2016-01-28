@@ -33,14 +33,14 @@ Options:
   -m, --multi   Operate on multiple entries
 """
 import json
-import webbrowser
 import subprocess
 import sys
+import webbrowser
 from collections import Counter
 from functools import partial, wraps
 
-from docopt import docopt
 import colorama
+from docopt import docopt
 # TODO: from fuzzywuzzy import fuzz
 
 # TODO: initialize ~/.config/pow
