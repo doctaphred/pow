@@ -3,6 +3,8 @@
 
 OS X only for now. Sorry.
 
+Requires Python 3.5+, `colorama`, `docopt`.
+
 "Installation": `alias pow='/path/to/pow.py'`
 
 Example usage:
