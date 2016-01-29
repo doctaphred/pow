@@ -1,6 +1,8 @@
 # POW!
 ### Command line text snippets, inspired by Zach Holman's **boom**
 
+OS X only for now. Sorry.
+
 "Installation": `alias pow='/path/to/pow.py`
 
 Example usage:
