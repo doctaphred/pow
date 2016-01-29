@@ -1,5 +1,5 @@
 # POW!
-### Command line text snippets, inspired by Zach Holman's **boom**
+### Command line text snippets, inspired by Zach Holman's [boom](http://zachholman.com/boom/)
 
 OS X only for now. Sorry.
 
