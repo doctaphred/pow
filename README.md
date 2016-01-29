@@ -3,7 +3,7 @@
 
 OS X only for now. Sorry.
 
-"Installation": `alias pow='/path/to/pow.py`
+"Installation": `alias pow='/path/to/pow.py'`
 
 Example usage:
 
