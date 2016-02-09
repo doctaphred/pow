@@ -232,7 +232,7 @@ class Pow:
             self.info('(add -m to open them all)')
 
 
-if __name__ == '__main__':
+def main():
     args = docopt(__doc__)
     # print(args)
 
@@ -276,3 +276,7 @@ if __name__ == '__main__':
         pow.default(labels)
 
     sys.exit(pow.exit_code)
+
+
+if __name__ == '__main__':
+    main()
