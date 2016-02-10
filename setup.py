@@ -3,13 +3,9 @@
 from setuptools import setup
 
 
-with open('requirements.txt') as f:
-    requirements = f.read().splitlines()
-
-
 setup(
     name='pow',
-    version='0.0.1',
+    version='0.0.2',
     description=(
         "Command line text snippets, inspired by Zach Holman's **boom**."),
     url='https://github.com/doctaphred/pow',
@@ -24,7 +20,10 @@ setup(
         ],
     keywords=['command line', 'text', 'snippet', 'snippets', 'clipboard'],
     py_modules=['pow'],
-    install_requires=requirements,
+    install_requires=[
+        'colorama',
+        'docopt',
+        ],
     extras_require={
         'test': ['flake8'],
         },
