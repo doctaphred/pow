@@ -111,7 +111,8 @@ class Pow:
 
     def save(self):
         with self.path.open('w') as f:
-            json.dump(self.rows, f, ensure_ascii=False, indent=2)
+            json.dump(self.rows, f, ensure_ascii=False, indent=2,
+                      sort_keys=True)
 
     def select(self, labels):
         labels = Counter(labels)
