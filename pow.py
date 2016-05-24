@@ -102,8 +102,12 @@ class Pow:
     @classmethod
     def load(cls, *args, **kwargs):
         cls.pow_dir.mkdir(parents=True, exist_ok=True)
-        with cls.path.open() as f:
-            return cls(rows=json.load(f), *args, **kwargs)
+        try:
+            with cls.path.open() as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            data = {}
+        return cls(rows=data, *args, **kwargs)
 
     def save(self):
         with self.path.open('w') as f:
@@ -121,7 +125,7 @@ class Pow:
         @wraps(func)
         def wrapper(self, entry, *args, **kwargs):
             if entry in self.rows:
-                self.failure(cyan(entry), 'already labeled', labels)
+                self.failure(cyan(entry), 'already labeled', self.rows[entry])
             else:
                 func(self, entry, *args, **kwargs)
         return wrapper
@@ -175,10 +179,11 @@ class Pow:
     def list(self):
         if not self.rows:
             self.failure('Nothing here!')
-        elif len(self.rows) == 1:
-            self.success('1 entry:', cyan(next(iter(self.rows))))
         else:
-            self.success(len(self.rows), 'entries:')
+            if len(self.rows) == 1:
+                self.success('1 entry:')
+            else:
+                self.success(len(self.rows), 'entries:')
             self.info()
             for entry in sorted(self.rows):
                 self.info(cyan(entry), self.rows[entry])
@@ -237,9 +242,9 @@ def main():
     # print(args)
 
     if args['edit']:
-        pass  # TODO
+        raise NotImplementedError  # TODO
     if args['view'] or args['cat']:
-        pass  # TODO
+        raise NotImplementedError  # TODO
 
     entry = args.get('<entry>')
     labels = args.get('<label>')
