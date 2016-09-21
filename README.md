@@ -1,13 +1,15 @@
 # POW!
 ### Command line text snippets, inspired by Zach Holman's [boom](http://zachholman.com/boom/)
 
-OS X only for now. Sorry.
+## Installation
+
+    pip3 install pow
 
 Requires Python 3.5+, `colorama`, `docopt`.
 
-"Installation": `alias pow='/path/to/pow.py'`
+OS X only for now. Sorry.
 
-Example usage:
+## Usage
 
 ```
 $ pow ls
@@ -49,6 +51,7 @@ POW! Copied 2 entries to the clipboard:
 ```
 
 My current entries:
+
 ```
 $pow ls
 POW! 11 entries:
