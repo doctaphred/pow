@@ -5,12 +5,12 @@ from setuptools import setup
 
 setup(
     name='pow',
-    version='0.0.2',
+    version='0.0.3',
     description=(
         "Command line text snippets, inspired by Zach Holman's **boom**."),
     url='https://github.com/doctaphred/pow',
-    author='Frederick Wagner',
-    author_email='doctaphred@gmail.com',
+    author='Frederick "doctaphred" Wagner',
+    author_email='yo@doctaph.red',
     license='GPLv3',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
